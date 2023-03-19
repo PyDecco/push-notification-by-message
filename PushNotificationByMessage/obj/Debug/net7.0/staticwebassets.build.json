@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "xuJ/EotV+L7knFuzygphWBVC+4/9t5F5V1PwMK7hPRk=",
+  "Source": "PushNotificationByMessage",
+  "BasePath": "_content/PushNotificationByMessage",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
