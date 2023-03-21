@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PushNotificationByMessage.Core.Entities;
 using PushNotificationByMessage.Core.Interfaces;
+using PushNotificationByMessage.Core.Request;
 
 namespace PushNotificationByMessage.Infrastructure.Repository
 {
@@ -17,6 +18,11 @@ namespace PushNotificationByMessage.Infrastructure.Repository
         {
             return await _context.Users.FirstOrDefaultAsync(prop => prop.Id == id);
 
+        }
+
+        public Task<User> PostAsync(UserRequest userRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

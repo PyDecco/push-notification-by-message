@@ -23,5 +23,23 @@ namespace PushNotificationByMessage.Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> PostAsync(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+
+            int result = 0;
+
+            try
+            {
+                result = await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw e;
+            }
+            
+            return entity.Id;
+        }
     }
 }
