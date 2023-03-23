@@ -15,8 +15,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-var connectionString = builder.Configuration.GetConnectionString("SensediaLocalSqlServer");
-builder.Services.AddDbContext<SensediaContext>(x => x.UseSqlServer(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("SensediaLocalSqlLite");
+builder.Services.AddDbContext<SensediaContext>(x => x.UseSqlite(connectionString));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

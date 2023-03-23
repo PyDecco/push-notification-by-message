@@ -48,5 +48,6 @@ namespace PushNotificationByMessage.Api.Controllers
             
             return _mapper.Map<User, UserToReturnDto>(user);
         }
+
     }
 }
