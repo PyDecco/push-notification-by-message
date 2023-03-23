@@ -726,4 +726,22 @@ obj/
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode,aspnetcore,dotnetcore
+=======
+# End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode,aspnetcore,dotnetcore
+# Created by https://www.toptal.com/developers/gitignore/api/database
+# Edit at https://www.toptal.com/developers/gitignore?templates=database
+
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# End of https://www.toptal.com/developers/gitignore/api/database
+>>>>>>> MERGE-LOCAL

@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using PushNotificationByMessage.Api.Dtos;
 using PushNotificationByMessage.Core.Entities;
+using PushNotificationByMessage.Core.Request;
 
 namespace PushNotificationByMessage.Api.Controllers
 {
@@ -20,15 +21,21 @@ namespace PushNotificationByMessage.Api.Controllers
         }
 
         [HttpPost("register")]
-        public List<User> Post()
+        public async Task<ActionResult<int>> PostUser([FromBody] UserRequest userRequest)
         {
-            var user = new User { Email = "decola@decola.com", Name = "Decola" };
+            var user = new User
+            {
+                Id = userRequest.Id,
+                Name = userRequest.Name,
+                Email = userRequest.Email,
+                Address = userRequest.Address,
+                NameCompany = userRequest.NameCompany,
+                Password = userRequest.Password,
+                Telephone = userRequest.Telephone,
+            }; // Não consegui usar auto mapper nessa circustancias
+            var result = await _usersRepo.PostAsync(user);
 
-            var userList = new List<User>();
-
-            userList.Add(user);
-
-            return userList;
+            return CreatedAtAction(nameof(GetUser), new { id = result }, result); //não consegui colocar mensagem no retorno
         }
 
         [HttpGet("{id}")]
@@ -41,5 +48,6 @@ namespace PushNotificationByMessage.Api.Controllers
             
             return _mapper.Map<User, UserToReturnDto>(user);
         }
+
     }
 }
