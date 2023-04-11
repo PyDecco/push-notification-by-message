@@ -20,7 +20,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
 
         }
 
-        public Task<User> PostAsync(UserRequest userRequest)
+        public Task<User> PostAsync(UserRegisterRequest userRequest)
         {
             throw new NotImplementedException();
         }

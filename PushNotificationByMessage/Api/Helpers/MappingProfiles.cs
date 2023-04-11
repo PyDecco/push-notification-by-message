@@ -9,6 +9,6 @@ namespace PushNotificationByMessage.Api.Helpers
         public MappingProfiles()
         {
             CreateMap<User, UserToReturnDto>();
-    }
+        }
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PushNotificationByMessage.Core.Entities;
 using System.Reflection;
 
 namespace PushNotificationByMessage.Infrastructure
 {
-    public class SensediaContext : DbContext
+    public class SensediaContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {
 
         public DbSet<User> Users { get; set; }

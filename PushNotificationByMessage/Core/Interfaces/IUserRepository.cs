@@ -6,6 +6,6 @@ namespace PushNotificationByMessage.Core.Interfaces
     public interface IUserRepository
     {
         Task<User> GetUserByIdAsync(int id);
-        Task<User> PostAsync(UserRequest userRequest);
+        Task<User> PostAsync(UserRegisterRequest userRequest);
     }
 }

@@ -1,14 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+
 namespace PushNotificationByMessage.Core.Entities
 {
-    public class User : BaseEntity
+    public class User : IdentityUser<int>, IBaseEntity
     {
-        public string Email { get; set; }
-        public string? Name { get; set; }
-
+        public string Name { get; set; }
         public string? NameCompany { get; set; }
-
-        public string? Telephone { get; set; }
         public string? Address { get; set; }
-        public string Password { get; set; }
-    }
+       
+    }   
 }

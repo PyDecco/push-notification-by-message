@@ -1,5 +1,8 @@
 using Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PushNotificationByMessage.Core.Entities;
+using PushNotificationByMessage.Core.Request;
 using PushNotificationByMessage.Infrastructure;
 using PushNotificationByMessage.Infrastructure.Repository;
 
@@ -9,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<SensediaContext>()
+    .AddDefaultTokenProviders();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
  
 builder.Services.AddControllers();

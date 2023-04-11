@@ -3,10 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PushNotificationByMessage.Core.Entities
 {
-    public class BaseEntity
+    public interface IBaseEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public int Id { get; set; }
     }
 }
