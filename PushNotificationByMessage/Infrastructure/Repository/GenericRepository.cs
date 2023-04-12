@@ -55,8 +55,18 @@ namespace PushNotificationByMessage.Infrastructure.Repository
 
         public async Task<User> GetByEmaildAsync(string email)
         {
-             return await _context.Set<User>().FindAsync(email);
+            try
+            {
+                var result = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
 
+                return result;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
     }
 }

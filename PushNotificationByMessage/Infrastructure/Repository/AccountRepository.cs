@@ -45,29 +45,37 @@ namespace PushNotificationByMessage.Infrastructure.Repository
 
         public async Task<string> LoginAsync(LoginRequest signInModel)
         {
-            var result = await _signInManager.PasswordSignInAsync(signInModel.Login, signInModel.Password, false, false);
-
-            if (!result.Succeeded)
+            try
             {
-                return null;
-            }
+                var result = await _signInManager.PasswordSignInAsync(signInModel.Login, signInModel.Password, false, false);
 
-            var authClaims = new List<Claim>
+                if (!result.Succeeded)
+                {
+                    return null;
+                }
+
+                var authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, signInModel.Login),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
+                var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(1),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
-                );
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddDays(1),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
+                    );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
     }
 }
