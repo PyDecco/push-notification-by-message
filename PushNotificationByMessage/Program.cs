@@ -1,10 +1,11 @@
-using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PushNotificationByMessage.Core.Entities;
-using PushNotificationByMessage.Core.Request;
-using PushNotificationByMessage.Infrastructure;
-using PushNotificationByMessage.Infrastructure.Repository;
+using PushNotificationByMessage.Adapters.Repository;
+using PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure;
+using PushNotificationByMessage.Models.Entites;
+using PushNotificationByMessage.Ports.In;
+using PushNotificationByMessage.Ports.Out;
+using PushNotificationByMessage.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddEntityFrameworkStores<SensediaContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+builder.Services.AddScoped<ICRUDUserUseCase, CRUDUserUseCase>();
+builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
  
 builder.Services.AddControllers();

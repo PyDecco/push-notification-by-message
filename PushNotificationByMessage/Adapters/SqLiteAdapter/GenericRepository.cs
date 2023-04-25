@@ -1,16 +1,14 @@
-﻿using Core.Interfaces;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using PushNotificationByMessage.Api.Dtos;
-using PushNotificationByMessage.Core.Entites;
-using PushNotificationByMessage.Core.Entities;
-using PushNotificationByMessage.Core.Request;
+using PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure;
+using PushNotificationByMessage.Models.Entites;
+using PushNotificationByMessage.Ports.Out;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace PushNotificationByMessage.Infrastructure.Repository
+namespace PushNotificationByMessage.Adapters.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -21,7 +19,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
         public GenericRepository(SensediaContext context)
         {
             _context = context;
-            _dbset = context.Set<T>(); 
+            _dbset = context.Set<T>();
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -47,7 +45,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
             return result;
         }
 
-       
+
         public Task<IReadOnlyList<T>> ListAllAsync()
         {
             throw new NotImplementedException();
@@ -66,7 +64,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
 
                 throw e;
             }
-            
+
         }
     }
 }

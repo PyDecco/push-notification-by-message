@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PushNotificationByMessage.Core.Entities;
 using System.Reflection;
+using PushNotificationByMessage.Models.Entites;
 
-namespace PushNotificationByMessage.Infrastructure
+namespace PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure
 {
     public class SensediaContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {

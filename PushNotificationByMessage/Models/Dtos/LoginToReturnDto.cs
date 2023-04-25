@@ -1,6 +1,4 @@
-﻿using PushNotificationByMessage.Core.Entities;
-
-namespace PushNotificationByMessage.Api.Dtos
+﻿namespace PushNotificationByMessage.Models.Dtos
 {
     public class LoginToReturnDto
     {
@@ -12,7 +10,7 @@ namespace PushNotificationByMessage.Api.Dtos
     public class UserLogin
     {
         public int id { get; set; }
-        public string name { get; set; } 
+        public string name { get; set; }
         public string email { get; set; }
     }
 }

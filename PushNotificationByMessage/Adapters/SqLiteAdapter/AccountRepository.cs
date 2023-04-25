@@ -1,18 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PushNotificationByMessage.Core.Entites;
-using PushNotificationByMessage.Core.Entities;
-using PushNotificationByMessage.Core.Request;
-using System;
-using System.Collections.Generic;
+using PushNotificationByMessage.Models.Dtos;
+using PushNotificationByMessage.Models.Entites;
+using PushNotificationByMessage.Ports.Out;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace PushNotificationByMessage.Infrastructure.Repository
+namespace PushNotificationByMessage.Adapters.Repository
 {
     public class AccountRepository : IAccountRepository
     {
@@ -29,7 +24,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
             _configuration = configuration;
         }
 
-        public async Task<IdentityResult> SignUpAsync(UserRegisterRequest signUpModel)
+        public async Task<IdentityResult> SignUpAsync(UserRegisterDto signUpModel)
         {
             var user = new User()
             {
@@ -43,7 +38,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
             return await _userManager.CreateAsync(user, signUpModel.Password);
         }
 
-        public async Task<string> LoginAsync(LoginRequest signInModel)
+        public async Task<string> LoginAsync(LoginDto signInModel)
         {
             try
             {
@@ -75,7 +70,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
             {
                 throw e;
             }
-            
+
         }
     }
 }

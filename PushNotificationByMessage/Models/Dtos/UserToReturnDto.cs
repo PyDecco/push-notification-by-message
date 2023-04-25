@@ -1,4 +1,4 @@
-﻿namespace PushNotificationByMessage.Api.Dtos
+﻿namespace PushNotificationByMessage.Models.Dtos
 {
     public class UserToReturnDto
     {

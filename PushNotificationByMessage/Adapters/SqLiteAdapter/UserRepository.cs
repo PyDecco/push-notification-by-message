@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PushNotificationByMessage.Core.Entities;
-using PushNotificationByMessage.Core.Interfaces;
-using PushNotificationByMessage.Core.Request;
+using PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure;
+using PushNotificationByMessage.Models.Dtos;
+using PushNotificationByMessage.Models.Entites;
+using PushNotificationByMessage.Ports.Out;
 
-namespace PushNotificationByMessage.Infrastructure.Repository
+namespace PushNotificationByMessage.Adapters.Repository
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private SensediaContext _context;
 
@@ -20,7 +21,7 @@ namespace PushNotificationByMessage.Infrastructure.Repository
 
         }
 
-        public Task<User> PostAsync(UserRegisterRequest userRequest)
+        public Task<User> PostAsync(UserRegisterDto userRequest)
         {
             throw new NotImplementedException();
         }
