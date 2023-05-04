@@ -6,7 +6,7 @@ using PushNotificationByMessage.Models.Entites;
 
 namespace PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure
 {
-    public class SensediaContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public class SensediaContext : DbContext
     {
 
         public DbSet<User> Users { get; set; }

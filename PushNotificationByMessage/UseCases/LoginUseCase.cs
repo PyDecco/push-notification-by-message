@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using PushNotificationByMessage.Models.Dtos;
 using PushNotificationByMessage.Models.Entites;
 using PushNotificationByMessage.Ports.In;
@@ -14,72 +12,51 @@ namespace PushNotificationByMessage.UseCases
     public class LoginUseCase : ILoginUseCase
     {
         private readonly IGenericRepository<User> _usersRepo;
-        private readonly IConfiguration _configuration;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IJWTCore _jwtCore;
 
-        public LoginUseCase(IGenericRepository<User> userRepo, SignInManager<User> signInManager, IConfiguration configuration)
+
+        public LoginUseCase(IGenericRepository<User> userRepo,  IJWTCore jwtCore)
         {
             _usersRepo = userRepo;
-            _configuration = configuration;
-            _signInManager = signInManager;
+            _jwtCore = jwtCore;
         }
 
         public async Task<LoginToReturnDto> Login(LoginDto loginRequest)
         {
-            var user = await VerificaSeEmailEncontrado(loginRequest.Login);
+            var dbUser = await VerificaSeEmailEncontrado(loginRequest.Login);
             
-            await VerificarLoginESenha(loginRequest);
-            var jwt = await GeradorDeJwt(loginRequest.Login);
+            await VerificarLoginESenha(loginRequest, dbUser);
+            var jwt = await _jwtCore.GeradorDeJwt(loginRequest.Login);
 
-            var gerarResult = await GeradorDeResult(user, jwt);
+            var gerarResult = await GeradorDeResult(dbUser, jwt);
 
             return gerarResult;
 
         }
 
-        private async Task<User> VerificaSeEmailEncontrado(string login)
+        private async Task<User> VerificaSeEmailEncontrado(string email)
         {
-            var user = await _usersRepo.GetByEmaildAsync(login);
+            var dbUser = await _usersRepo.GetByEmaildAsync(email);
 
-            if (user == null)   
+            if (dbUser == null)   
             {
                 throw new UnauthorizedAccessException("Usuario Nao encontrado");
             }   
 
-            return user;
+            return dbUser;
         }
 
-        private async Task<SignInResult> VerificarLoginESenha(LoginDto loginRequest)
+        private async Task<bool> VerificarLoginESenha(LoginDto loginRequest, User dbUser)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginRequest.Login, loginRequest.Password, false, false);
-
-            if (!result.Succeeded)
+            var senhaCompativel = BCrypt.Net.BCrypt.Verify(loginRequest.Password, dbUser.Password);
+            
+            if (!senhaCompativel)
             {
                 throw new UnauthorizedAccessException("Login e password não coicidem");
             }
 
-            return result;
+            return senhaCompativel;
 
-        }
-
-        private async Task<string> GeradorDeJwt(string login)
-        {
-            var authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, login),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-            var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(1),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
-                );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private async Task<LoginToReturnDto> GeradorDeResult(User user, string jwt)

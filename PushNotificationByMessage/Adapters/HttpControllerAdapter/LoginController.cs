@@ -29,7 +29,7 @@ namespace PushNotificationByMessage.Api.Controllers
             }
             catch (UnauthorizedAccessException u)
             {
-                return await EncasuplarException(u, HttpStatusCode.Unauthorized);
+                return await base.EncasuplarException(u, HttpStatusCode.Unauthorized);
             }
             catch (Exception e) { return StatusCode(500); }
         }

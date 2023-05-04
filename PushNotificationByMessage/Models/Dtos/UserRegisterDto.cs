@@ -5,10 +5,10 @@ namespace PushNotificationByMessage.Models.Dtos
 {
     public class UserRegisterDto
     {
-        [Required]
+        
         public string Email { get; set; }
         public string? Name { get; set; }
-        public string? NameCompany { get; set; }
+        public string? CompanyName { get; set; }
         public string? Telephone { get; set; }
         public string? Address { get; set; }
         [Required]
@@ -51,7 +51,7 @@ namespace PushNotificationByMessage.Models.Dtos
         public string CompanyName;
 
         [JsonProperty("phone_number")]
-        public string PhoneNumber;
+        public string? PhoneNumber;
 
         [JsonProperty("company_address")]
         public string CompanyAddress;

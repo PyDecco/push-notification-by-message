@@ -30,8 +30,8 @@ namespace PushNotificationByMessage.Adapters.Repository
         public async Task<int> PostAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-
             int result = 0;
+
 
             try
             {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PushNotificationByMessage.Adapters.Repository;
 using PushNotificationByMessage.Adapters.SqLiteAdapter.Infrastructure;
+using PushNotificationByMessage.Core;
 using PushNotificationByMessage.Models.Entites;
 using PushNotificationByMessage.Ports.In;
 using PushNotificationByMessage.Ports.Out;
@@ -13,13 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddIdentity<User, IdentityRole<int>>()
+/*builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddEntityFrameworkStores<SensediaContext>()
-    .AddDefaultTokenProviders();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+    .AddDefaultTokenProviders();*/
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
 builder.Services.AddScoped<ICRUDUserUseCase, CRUDUserUseCase>();
 builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
+builder.Services.AddScoped<IJWTCore, JWTCore>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
  
 builder.Services.AddControllers();

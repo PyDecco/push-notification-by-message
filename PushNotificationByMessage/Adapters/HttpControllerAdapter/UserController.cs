@@ -30,38 +30,34 @@ namespace PushNotificationByMessage.Api.Controllers
             }
             catch (NullReferenceException ex)
             {
-                return await EncasuplarException(ex, HttpStatusCode.Forbidden);
+                return await base.EncasuplarException(ex, HttpStatusCode.Forbidden);
             }
             catch (UnauthorizedAccessException ex)
             {
-                return await EncasuplarException(ex, HttpStatusCode.Unauthorized);
+                return await base.EncasuplarException(ex, HttpStatusCode.Unauthorized);
             }
             catch (Exception ex) 
             {
-                return await EncasuplarException(ex, HttpStatusCode.InternalServerError);
+                return await base.EncasuplarException(ex, HttpStatusCode.InternalServerError);
             }
 
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GetByUserReturnDto>> GetUser(int id)
         {
             try
             {
                 var user = await _crudUserUseCase.GetById(id);
-                var result  = Ok(user);
-
-                return result;
+                return Ok(user);
             }
             catch (KeyNotFoundException k)
             {
-                return await EncasuplarException(k, HttpStatusCode.NotFound);
-
+                return await base.EncasuplarException(k, HttpStatusCode.NotFound);
             }
             catch (Exception e)
             {
-                return await EncasuplarException(e, HttpStatusCode.InternalServerError);
+                return await base.EncasuplarException(e, HttpStatusCode.InternalServerError);
             }
         }
     }

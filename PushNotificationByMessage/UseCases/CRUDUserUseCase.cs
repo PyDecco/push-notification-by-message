@@ -9,18 +9,16 @@ namespace PushNotificationByMessage.UseCases
 {
     public class CRUDUserUseCase : ICRUDUserUseCase
     {
-        private readonly UserManager<User> _userManager;
         private readonly IGenericRepository<User> _usersRepo;
 
-        public CRUDUserUseCase(UserManager<User> userManager, IGenericRepository<User> usersRepo)
+        public CRUDUserUseCase( IGenericRepository<User> usersRepo)
         {
-            _userManager = userManager;
             _usersRepo = usersRepo;
         }
 
         public async Task<GetByUserReturnDto> GetById(int id)
         {
-            var user = await EncontreUmUsuarioOuRetorneUmErro(id);
+            var user = await EncontreUmUsuarioOuLanceUmErro(id);
             var userReturn = await MapeieORetornoDoFluxo(user);
             return userReturn;
         }
@@ -32,14 +30,14 @@ namespace PushNotificationByMessage.UseCases
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                CompanyName = user.NameCompany,
+                CompanyName = user.CompanyName,
                 PhoneNumber = user.PhoneNumber,
-                CompanyAddress = user.Address,
-                Password = user.PasswordHash,
+                CompanyAddress = user.CompanyAddress,
+                Password = user.Password,
             };
         }
 
-        private async Task<User> EncontreUmUsuarioOuRetorneUmErro(int id)
+        private async Task<User> EncontreUmUsuarioOuLanceUmErro(int id)
         {
             var user = await _usersRepo.GetByIdAsync(id);
 
