@@ -13,12 +13,13 @@ namespace PushNotificationByMessage.UseCases
     {
         private readonly IGenericRepository<User> _usersRepo;
         private readonly IJWTCore _jwtCore;
+        private readonly IBCrypt _bcrypt;
 
-
-        public LoginUseCase(IGenericRepository<User> userRepo,  IJWTCore jwtCore)
+        public LoginUseCase(IGenericRepository<User> userRepo, IJWTCore jwtCore, IBCrypt bcrypt)
         {
             _usersRepo = userRepo;
             _jwtCore = jwtCore;
+            _bcrypt = bcrypt;
         }
 
         public async Task<LoginToReturnDto> Login(LoginDto loginRequest)
@@ -48,7 +49,7 @@ namespace PushNotificationByMessage.UseCases
 
         private async Task<bool> VerificarLoginESenha(LoginDto loginRequest, User dbUser)
         {
-            var senhaCompativel = BCrypt.Net.BCrypt.Verify(loginRequest.Password, dbUser.Password);
+            var senhaCompativel = _bcrypt.Verify(loginRequest.Password, dbUser.Password);
             
             if (!senhaCompativel)
             {
